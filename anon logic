@@ -1,0 +1,20 @@
+use rand::{Rng, distributions::Alphanumeric};
+
+async fn process_input(input: &str) -> Result<String, reqwest::Error> {
+    // Call LLM to identify personal data (mocked here)
+    let llm_response = call_llm(input).await?;
+    
+    // Replace personal data with random identifiers (simplified example)
+    let anonymized = llm_response.chars().map(|c| {
+        if c.is_alphabetic() { // Simplified condition for demonstration
+            rand::thread_rng()
+                .sample_iter(&Alphanumeric)
+                .take(5)
+                .collect::<String>()
+        } else {
+            c.to_string()
+        }
+    }).collect::<String>();
+
+    Ok(anonymized)
+}
