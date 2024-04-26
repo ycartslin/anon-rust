@@ -1,0 +1,21 @@
+use reqwest::Client;
+use serde_json::{json, Value};
+use tokio;
+
+#[tokio::main]
+async fn main() -> Result<(), reqwest::Error> {
+    println!("App started");
+
+    let input_text = "Draft a contract between Nils Tracy and Jim Combs...";
+    let anonymized_text = process_input(input_text).await?;
+
+    println!("Anonymized text: {}", anonymized_text);
+
+    Ok(())
+}
+
+async fn process_input(input: &str) -> Result<String, reqwest::Error> {
+    // Here you would integrate the logic to process the input text
+    // For now, let's just return the input text as a placeholder
+    Ok(input.to_string())
+}
