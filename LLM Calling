@@ -1,0 +1,15 @@
+async fn call_llm(input: &str) -> Result<String, reqwest::Error> {
+    let client = Client::new();
+    let api_key = "your_hugging_face_api_key_here"; // Use your Hugging Face API key
+    let endpoint = "https://api-inference.huggingface.co/models/llama"; // Adjust based on actual Llama endpoint
+
+    let response = client.post(endpoint)
+        .header("Authorization", format!("Bearer {}", api_key))
+        .json(&json!({"inputs": input}))
+        .send()
+        .await?
+        .json::<Value>()
+        .await?;
+
+    Ok(response["generated_text"].as_str().unwrap_or("").to_string())
+}
